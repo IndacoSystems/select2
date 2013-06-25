@@ -1078,7 +1078,11 @@ the specific language governing permissions and limitations under the Apache Lic
             this.enableInterface();
             return true;
         },
-
+		
+		disable : function() {
+            this.enable(false);
+        },
+		
         // abstract
         readonly: function(enabled) {
             if (enabled === undefined) enabled = false;
@@ -1674,9 +1678,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     //Determine the placeholder option based on the specified placeholderOption setting
                     return (this.opts.placeholderOption === "first" && firstOption) ||
                            (typeof this.opts.placeholderOption === "function" && this.opts.placeholderOption(this.select));
-                } else if (firstOption.text() === "" && firstOption.val() === "") {
-                    //No explicit placeholder option specified, use the first if it's blank
-                    return firstOption;
+                } else if (firstOption.val() === "") {
+                    //No explicit placeholder option specified, use the first and clone it
+                    return firstOption.clone();
                 }
             }
         },
@@ -3015,7 +3019,7 @@ the specific language governing permissions and limitations under the Apache Lic
             opts,
             select2,
             method, value, multiple,
-            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable", "readonly", "positionDropdown", "data", "search"],
+            allowedMethods = ["val", "destroy", "opened", "open", "close", "focus", "isFocused", "container", "dropdown", "onSortStart", "onSortEnd", "enable","disable", "readonly", "positionDropdown", "data", "search"],
             valueMethods = ["val", "opened", "isFocused", "container", "data"],
             methodsMap = { search: "externalSearch" };
 
@@ -3072,8 +3076,8 @@ the specific language governing permissions and limitations under the Apache Lic
         openOnEnter: true,
         containerCss: {},
         dropdownCss: {},
-        containerCssClass: "",
-        dropdownCssClass: "",
+        containerCssClass: "custom_select",
+        dropdownCssClass: "",		
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
