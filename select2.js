@@ -1083,6 +1083,18 @@ the specific language governing permissions and limitations under the Apache Lic
             this.enable(false);
         },
 		
+		 /*
+         Update select html and set value  
+       */
+        updateOptions: function (html,value) {
+            this.select.html(html);
+            this.select.trigger('change');
+            
+            if(typeof value !== 'undefined') {
+                this.val(value);
+            }
+        },
+		
         // abstract
         readonly: function(enabled) {
             if (enabled === undefined) enabled = false;
