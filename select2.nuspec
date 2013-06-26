@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>iSelect2</id>
+    <version>3.4.0</version>
+    <authors>ivanyberg</authors>
+    <owners>Indaco Systems</owners>
+    <description>Dropdown, modified by Indaco Systems</description>
+    <projectUrl>http://ivaynberg.github.io/select2/</projectUrl>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <tags>select</tags>
+    <language>en-US</language>
+  </metadata>
+  <files>
+    <file src="select2.js" target="Content\Scripts\Lib\Vendor\Select2\select2.js" />
+    <file src="select2.css" target="Content\Scripts\Lib\Vendor\Select2\select2.css" />
+    <file src="select2.png" target="Content\Scripts\Lib\Vendor\Select2\select2.png" />
+    <file src="select2-spinner.gif" target="Content\Scripts\Lib\Vendor\Select2\select2-spinner.gif" />
+     <file src="select2_locale_ro.js" target="Content\Scripts\Lib\Vendor\Select2\select2_locale_ro.js" />
+  </files>
+</package>
