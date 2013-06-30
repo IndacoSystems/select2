@@ -1667,7 +1667,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (data) {
                 this.highlight(index);
                 this.onSelect(data, options);
-            } else if (options.noFocus) {
+            } else if (options && options.noFocus) {
                 this.close();
             }
         },
