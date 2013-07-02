@@ -2319,6 +2319,10 @@ the specific language governing permissions and limitations under the Apache Lic
 
             // TODO validate placeholder is a string if specified
 
+            if(typeof $.fn.select2.defaults.placeholder === 'undefined' && typeof opts.element.data('placeholder') === 'undefined') {
+                opts.element.data('placeholder', $.fn.select2.defaults.formatPlaceholder());
+            }
+
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
                 opts.initSelection = function (element, callback) {
@@ -3101,7 +3105,7 @@ the specific language governing permissions and limitations under the Apache Lic
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "custom_select",
-        dropdownCssClass: "",		
+        dropdownCssClass: "",      
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
@@ -3121,6 +3125,9 @@ the specific language governing permissions and limitations under the Apache Lic
         formatSelectionTooBig: function (limit) { return "You can only select " + limit + " item" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
+        formatPlaceholder : function() {
+            return "Choose";
+        },
         minimumResultsForSearch: 0,
         minimumInputLength: 0,
         maximumInputLength: null,
