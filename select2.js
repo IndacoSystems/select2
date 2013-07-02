@@ -38,7 +38,19 @@ the specific language governing permissions and limitations under the Apache Lic
  	}
 })(jQuery);
 
-(function ($, undefined) {
+(function(factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([
+            'jquery'
+        ], function(jQuery) {
+            factory(jQuery);
+            var selectResources = requireConfig.websiteOptions.locale == 'ro' ? 'select2-ro' : '';
+            require([selectResources]);
+        });
+    } else {
+        factory(window.jQuery);
+    }
+})((function ($) {
     "use strict";
     /*global document, window, jQuery, console */
 
@@ -3101,7 +3113,7 @@ the specific language governing permissions and limitations under the Apache Lic
         sortResults: function (results, container, query) {
             return results;
         },
-        formatResultCssClass: function(data) {return undefined;},
+        formatResultCssClass: function (data) {return undefined;},
         formatSelectionCssClass: function(data, container) {return undefined;},
         formatNoMatches: function () { return "No matches found"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Please enter " + n + " more character" + (n == 1? "" : "s"); },
@@ -3169,4 +3181,4 @@ the specific language governing permissions and limitations under the Apache Lic
         }
     };
 
-}(jQuery));
+}));
