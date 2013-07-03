@@ -13,6 +13,9 @@
         formatSearching: function () { return "Căutare..."; },
         formatPlaceholder : function() {
             return "Alegeți";
-        }
+        },
+        formatSaveItem: function (val) {
+            return "Salvează " + val;
+        },
     });
 })(jQuery);
