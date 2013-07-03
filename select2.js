@@ -1034,10 +1034,18 @@ the specific language governing permissions and limitations under the Apache Lic
                 contentType: 'application/json; charset=utf-8'
             }).then(function (response) {
                 if (response.Id) {
-                    var $opt = $('<option value="' + response.Id + '">' + (response.Name != '' ? response.Name : value) + '</option>');
+                    var $opt = $('<option value="' + response.Id + '">' + value + '</option>');
 
                     self.select.find('option:last').after($opt);
-                    self.select.select2('val', response.Id);
+                    var newValue = self.select.select2('val');
+
+                    if(typeof newValue !== 'undefined' && $.isArray(newValue)) {
+                        newValue.push(response.Id);
+                    }else {
+                        newValue = response.Id;
+                    }
+
+                    self.select.select2('val', newValue);
                 }
                 self.enable();
             });
@@ -1695,9 +1703,9 @@ the specific language governing permissions and limitations under the Apache Lic
                     if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
 
                         if (opts.allowsave == true) {
-                            render('<li class="select2-save js-saveOption" data-value="' + search.val() + '">' + opts.formatSaveItem(search.val()) + '</li>');
+                            render('<li class="select2-save js-saveOption" data-value="' + search.val() + '">' + $.fn.select2.defaults.formatSaveItem(search.val()) + '</li>');
                         } else {
-                            render("<li class='select2-no-results'>" + opts.formatNoMatches(search.val()) + "</li>");
+                            render("<li class='select2-no-results'>" + $.fn.select2.defaults.formatNoMatches(search.val()) + "</li>");
                         }
 
                         return;
@@ -3127,7 +3135,6 @@ the specific language governing permissions and limitations under the Apache Lic
     });
 
     $.fn.select2 = function () {
-
         var args = Array.prototype.slice.call(arguments, 0),
             opts,
             select2,
@@ -3182,7 +3189,12 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
     // plugin defaults, accessible to users
-    $.fn.select2.defaults = {
+    
+    if(typeof $.fn.select2.defaults === 'undefined') {
+        $.fn.select2.defaults = { };
+    }
+
+    $.extend($.fn.select2.defaults, {
         width: "copy",
         loadMorePadding: 0,
         closeOnSelect: true,
@@ -3249,7 +3261,7 @@ the specific language governing permissions and limitations under the Apache Lic
             return rez;
         },
         adaptDropdownCssClass: function (c) { return null; }
-    };
+    });
 
     $.fn.select2.ajaxDefaults = {
         transport: $.ajax,
