@@ -2323,6 +2323,10 @@ the specific language governing permissions and limitations under the Apache Lic
                 opts.element.data('placeholder', $.fn.select2.defaults.formatPlaceholder());
             }
 
+            if (typeof opts.containerCssClass === 'undefined' || opts.containerCssClass === $.fn.select2.defaults.containerCssClass) {
+                opts.containerCssClass = $.fn.select2.defaults.containerMultiCssClass;
+            }
+
             if (opts.element.get(0).tagName.toLowerCase() === "select") {
                 // install sthe selection initializer
                 opts.initSelection = function (element, callback) {
@@ -3105,7 +3109,8 @@ the specific language governing permissions and limitations under the Apache Lic
         containerCss: {},
         dropdownCss: {},
         containerCssClass: "custom_select",
-        dropdownCssClass: "",      
+        containerMultiCssClass : "custom_select-multi",
+        dropdownCssClass: "",
         formatResult: function(result, container, query, escapeMarkup) {
             var markup=[];
             markMatch(result.text, query.term, markup, escapeMarkup);
