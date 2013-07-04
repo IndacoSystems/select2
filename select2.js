@@ -854,6 +854,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                             compound = result.children && result.children.length > 0;
 
+
                             node = $("<li></li>");
                             node.addClass("select2-results-dept-" + depth);
                             node.addClass("select2-result");
@@ -1015,7 +1016,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var data = {};
 
             data[this.opts.propName] = value;
-            
+
             if (this.opts.additionalData) {
                 if (this.opts.additionalDataValue.length == 0) {
                     this.select.trigger('additionalDataValue', data);
@@ -1035,14 +1036,20 @@ the specific language governing permissions and limitations under the Apache Lic
                 contentType: 'application/json; charset=utf-8'
             }).then(function (response) {
                 if (response.Id) {
-                    var $opt = $('<option value="' + response.Id + '">' + value + '</option>');
+                    var $opt = $('<option value="' + response.Id + '">' + value + '</option>'),
+                        $lastOption = self.select.find('option:last');
 
-                    self.select.find('option:last').after($opt);
+                    if($lastOption.length) {
+                        self.select.find('option:last').after($opt);
+                    }else {
+                        self.select.append($opt);
+                    }
+
                     var newValue = self.select.select2('val');
 
-                    if(typeof newValue !== 'undefined' && $.isArray(newValue)) {
+                    if (typeof newValue !== 'undefined' && $.isArray(newValue)) {
                         newValue.push(response.Id);
-                    }else {
+                    } else {
                         newValue = response.Id;
                     }
 
@@ -1703,7 +1710,7 @@ the specific language governing permissions and limitations under the Apache Lic
 
                     if (data.results.length === 0 && checkFormatter(opts.formatNoMatches, "formatNoMatches")) {
 
-                        if (opts.allowsave == true) {
+                        if (opts.allowsave == true && search.val() != '') {
                             render('<li class="select2-save js-saveOption" data-value="' + search.val() + '">' + $.fn.select2.defaults.formatSaveItem(search.val()) + '</li>');
                         } else {
                             render("<li class='select2-no-results'>" + $.fn.select2.defaults.formatNoMatches(search.val()) + "</li>");
@@ -1761,7 +1768,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 data = highlighted.closest('.select2-result').data("select2-data"),
                 $saveOption = this.results.find('.js-saveOption');
 
-            if($saveOption.length == 1) {
+            if ($saveOption.length == 1) {
                 $saveOption.trigger('click');
                 return;
             }
@@ -3190,9 +3197,9 @@ the specific language governing permissions and limitations under the Apache Lic
     };
 
     // plugin defaults, accessible to users
-    
-    if(typeof $.fn.select2.defaults === 'undefined') {
-        $.fn.select2.defaults = { };
+
+    if (typeof $.fn.select2.defaults === 'undefined') {
+        $.fn.select2.defaults = {};
     }
 
     $.extend($.fn.select2.defaults, {
@@ -3225,7 +3232,7 @@ the specific language governing permissions and limitations under the Apache Lic
         formatLoadMore: function (pageNumber) { return "Loading more results..."; },
         formatSearching: function () { return "Searching..."; },
         formatPlaceholder: function () {
-            return "Choose";
+            return requireConfig.websiteOptions != null && requireConfig.websiteOptions.locale == "ro" ? "Alegeți" : "Choose";
         },
         formatSaveItem: function (val) {
             return "Add " + val;
