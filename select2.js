@@ -770,7 +770,7 @@ the specific language governing permissions and limitations under the Apache Lic
             // Calculate size of scrollbar
             scrollBarDimensions = scrollBarDimensions || measureScrollbar();
 
-            this.autofocus = opts.element.prop("autofocus")
+            this.autofocus = opts.element.prop("autofocus");
             opts.element.prop("autofocus", false);
             if (this.autofocus) this.focus();
         },
@@ -2104,7 +2104,12 @@ the specific language governing permissions and limitations under the Apache Lic
 
             this.initContainerWidth();
             this.opts.element.addClass("select2-offscreen");
-            this.setPlaceholder();
+            
+            if (this.opts.startData != null) {
+                this.updateSelection(this.opts.startData);
+            }else {
+                this.setPlaceholder();
+            }
 
         },
 
