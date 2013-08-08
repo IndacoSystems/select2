@@ -5,7 +5,7 @@
 
     var iTags = function (element, options) {
         this.$element = $(element);
-
+        options = options || { };
         if (options.url != '') {
             options.withAjax = true;
         }
@@ -24,7 +24,9 @@
     };
 
     iTags.prototype._buildElement = function () {
-        if (this.$element.is('select')) {
+        var isHiddenInput = this.$element.is('input') && this.$element.prop('type') === 'hidden';
+        
+        if (!isHiddenInput) {
             var $replaceElement = this._buildInputElement();
             this.$element.replaceWith($replaceElement);
             this.$element = $replaceElement;
